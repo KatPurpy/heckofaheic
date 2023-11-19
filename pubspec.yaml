@@ -1,7 +1,8 @@
 name: heckofaheic
 description: HEIC to PNG converter for Web our beloved
-version: 0.0.1
-homepage: https://katpurpy.github.io/
+version: 0.0.2
+homepage: https://katpurpy.github.io
+repository: https://github.com/KatPurpy/heckofaheic
 
 environment:
   sdk: '>=3.1.5 <4.0.0'
