@@ -1,7 +1,7 @@
 # heckofaheic
 [![pub package](https://img.shields.io/pub/v/heckofaheic)](https://pub.dev/packages/heckofaheic)
 
-Converts HEIC into PNG/JPEG/GIF using heic2any.
+Converts HEIC into PNG/JPEG/GIF using [heic2any](https://github.com/alexcorvi/heic2any).
 
 Useful in case your users are uploading HEIC images to your Flutter web app
 that need to be displayed correctly, as HEIC is not supported by most browsers.
