@@ -1,3 +1,9 @@
+## 0.0.3
+
+- Kudos to @TechnicJelle for this release!
+- Final fixes to release version
+- Whole heic2any exposed
+
 ## 0.0.2
 
 - Added github repo
