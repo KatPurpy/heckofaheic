@@ -3,6 +3,7 @@ import "dart:typed_data";
 import "package:flutter/material.dart";
 import "package:image_picker/image_picker.dart";
 import "package:heckofaheic/heckofaheic.dart";
+import "package:flutter_dropzone/flutter_dropzone.dart";
 
 const double imageSize = 300;
 
@@ -36,7 +37,21 @@ class _UploadedImage extends StatefulWidget {
 }
 
 class _UploadedImageState extends State<_UploadedImage> {
+  late DropzoneViewController dropzoneViewController;
   Uint8List? image;
+
+  void setImageFromBytes(Uint8List imageBytes) async {
+    if (HeckOfAHeic.isHEIC(imageBytes)) {
+      debugPrint(
+          "Converting HEIC... ${String.fromCharCodes(imageBytes, 0, 16)}");
+      imageBytes = await HeckOfAHeic.convert(imageBytes);
+      debugPrint("Converted HEIC! ${String.fromCharCodes(imageBytes, 0, 16)}");
+    }
+
+    setState(() {
+      image = imageBytes;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +66,13 @@ class _UploadedImageState extends State<_UploadedImage> {
             width: imageSize,
             height: imageSize,
           ),
+        Positioned.fill(
+            child: DropzoneView(
+                onCreated: (ctl) => dropzoneViewController = ctl,
+                onDrop: (file) async {
+                  setImageFromBytes(
+                      await dropzoneViewController.getFileData(file));
+                })),
         Positioned.fill(
           child: Material(
             color: Colors.transparent,
@@ -70,16 +92,7 @@ class _UploadedImageState extends State<_UploadedImage> {
                 if (pickedImage == null) return; // User cancelled the popup
 
                 Uint8List imageBytes = await pickedImage.readAsBytes();
-
-                if (HeckOfAHeic.isHEIC(imageBytes)) {
-                  debugPrint("Converting HEIC... ${String.fromCharCodes(imageBytes, 0, 16)}");
-                  imageBytes = await HeckOfAHeic.convert(imageBytes);
-                  debugPrint("Converted HEIC! ${String.fromCharCodes(imageBytes, 0, 16)}");
-                }
-
-                setState(() {
-                  image = imageBytes;
-                });
+                setImageFromBytes(imageBytes);
               },
             ),
           ),
