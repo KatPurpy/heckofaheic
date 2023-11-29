@@ -1,3 +1,7 @@
+## 0.0.7
+
+- Added examples (@TechnicJelle)
+
 ## 0.0.3
 
 - Kudos to @TechnicJelle for this release!
